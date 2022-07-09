@@ -10,6 +10,8 @@ class Plateau
     inside_measures?(x_to, y_to)
   end
 
+  private
+
   def inside_measures?(x_to, y_to)
     (x_to >= 0 and x_to <= x) and (y_to >= 0 and y_to <= y)
   end

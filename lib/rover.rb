@@ -1,4 +1,4 @@
-require './errors'
+require_relative 'errors'
 
 class Rover
   COORDINATES = %w[N E S W].freeze
@@ -16,6 +16,12 @@ class Rover
     run_command(command)
   end
 
+  def position
+   "#{x} #{y} #{@heading}"
+  end
+
+  private
+
   def rotate_right
     @heading = COORDINATES[COORDINATES.find_index(heading) - 3]
   end
@@ -26,14 +32,10 @@ class Rover
 
   def move
     unless plateau.can_move_to?(*destination_coordinates)
-      raise CoordinatesOutsideOfPlateau, "destination outside of (#{x},#{y})"
+      raise CoordinatesOutsideOfPlateauError, "destination outside of (#{x},#{y})"
     end
 
     @x, @y = destination_coordinates
-  end
-
-  def position
-    puts "#{x} #{y} #{@heading}"
   end
 
   def destination_coordinates
@@ -58,7 +60,7 @@ class Rover
     when 'M'
       move
     else
-      raise RoverCommandDoesNotExist, "\"#{command}\" command does not exist"
+      raise RoverCommandDoesNotExistError, "\"#{command}\" command does not exist"
     end
   end
 end
