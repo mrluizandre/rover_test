@@ -17,7 +17,7 @@ class Rover
   end
 
   def position
-   "#{x} #{y} #{@heading}"
+    "#{x} #{y} #{@heading}"
   end
 
   private
