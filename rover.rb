@@ -12,6 +12,8 @@ class Rover
 
   def send(command)
     analyze_command(command)
+    # print 'Can move to: '
+    # puts plateau.can_move_to?
   rescue RuntimeError => e
     puts e.message
   end
@@ -24,6 +26,25 @@ class Rover
     @heading = COORDINATES[COORDINATES.find_index(heading) - 1]
   end
 
+  def move
+    raise 'Coordinates outside of plateau' unless plateau.can_move_to? *destination_coordinates
+
+    @x, @y = destination_coordinates
+  end
+
+  def destination_coordinates
+    case heading
+    when 'N'
+      [x, y + 1]
+    when 'E'
+      [x + 1, y]
+    when 'S'
+      [x, y - 1]
+    when 'W'
+      [x - 1, y]
+    end
+  end
+
   def analyze_command(command)
     case command
     when 'L'
@@ -31,7 +52,7 @@ class Rover
     when 'R'
       rotate_right
     when 'M'
-      puts 'Move'
+      move
     else
       raise 'Not valid command'
     end
