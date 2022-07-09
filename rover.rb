@@ -32,6 +32,10 @@ class Rover
     @x, @y = destination_coordinates
   end
 
+  def position
+    puts "#{x} #{y} #{@heading}"
+  end
+
   def destination_coordinates
     case heading
     when 'N'
@@ -56,6 +60,5 @@ class Rover
     else
       raise 'Not valid command'
     end
-    puts "(#{x},#{y}): #{@heading}"
   end
 end
